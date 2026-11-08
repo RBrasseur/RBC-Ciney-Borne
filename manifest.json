@@ -1,0 +1,10 @@
+{
+  "name": "RBC Ciney — Prise de Commandes",
+  "short_name": "RBC Ciney",
+  "description": "Application de prise de commandes de boissons et snacks au RBC Ciney",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#F4F7FC",
+  "theme_color": "#003399",
+  "lang": "fr"
+}

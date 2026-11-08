@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#003399">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>RBC Ciney — Prise de Commandes</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- EN-TÊTE AUX COULEURS DU CLUB (SANS LOGO INVENTÉ) -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="club-identity" id="btnHomeHeader" role="button" tabindex="0" aria-label="Retour à la sélection générale">
+        <span class="club-welcome">BIENVENUE AU</span>
+        <h1 class="club-name">RBC CINEY</h1>
+      </div>
+      <div class="header-actions">
+        <button type="button" id="btnManageMenu" class="btn-header-outline" aria-label="Gérer la carte">
+          Gérer la carte
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- BANDEAU DE NOTIFICATION RAPIDE (FEEDBACK AJOUT + ANNULATION RAPIDE) -->
+  <div id="toastBanner" class="toast-banner hidden" role="status" aria-live="polite">
+    <span id="toastText" class="toast-text"></span>
+    <button type="button" id="btnToastUndo" class="btn-toast-undo" title="Retirer cet article (-1)">
+      -1 Corriger
+    </button>
+  </div>
+
+  <!-- CONTENU PRINCIPAL -->
+  <main class="app-main">
+
+    <!-- VUE 1 : SÉLECTION GÉNÉRALE DES CATÉGORIES + RÉSUMÉ & TOTAL -->
+    <section id="viewGeneral" class="view-section active" aria-labelledby="headingCategories">
+      <div class="section-header">
+        <h2 id="headingCategories" class="section-title">Sélection générale</h2>
+        <p class="section-subtitle">Touchez une catégorie pour choisir une boisson ou un snack</p>
+      </div>
+
+      <!-- GRILLE DES CATÉGORIES (BIÈRES, VINS & CRÉMANTS, SOFTS, BOISSONS CHAUDES, SOUPES, SNACKS...) -->
+      <div id="categoriesGrid" class="categories-grid"></div>
+
+      <!-- RÉSUMÉ DE LA COMMANDE EN COURS SUR L'ÉCRAN GÉNÉRAL -->
+      <div class="summary-card" id="summarySection">
+        <div class="summary-header">
+          <div>
+            <h2 class="summary-title">Résumé de la commande</h2>
+            <p class="summary-subtitle">Utilisez <strong>-</strong> pour corriger ou <strong>+</strong> pour ajouter</p>
+          </div>
+          <div class="summary-total-badge" id="summaryTotalBadge">
+            <span class="total-label">Total</span>
+            <span class="total-number" id="totalItemsCount">0</span>
+          </div>
+        </div>
+
+        <!-- LISTE DES ARTICLES PRIS -->
+        <div id="orderEmptyState" class="order-empty">
+          Aucun article sélectionné pour le moment.
+        </div>
+
+        <ul id="orderItemsList" class="order-items-list hidden"></ul>
+
+        <!-- ACTIONS DE VALIDATION ET REMISE À ZÉRO -->
+        <div class="summary-footer">
+          <button type="button" id="btnClearOrder" class="btn-secondary" disabled>
+            Tout effacer
+          </button>
+          <button type="button" id="btnValidateOrder" class="btn-validate" disabled>
+            Valider la commande (<span id="btnValidateCount">0</span>)
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- VUE 2 : SÉLECTION DES ARTICLES D'UNE CATÉGORIE -->
+    <section id="viewCategory" class="view-section hidden" aria-labelledby="currentCategoryTitle">
+      <div class="category-nav-bar">
+        <button type="button" id="btnBackToGeneral" class="btn-back">
+          &larr; Retour à la sélection générale
+        </button>
+        <div class="category-header-info">
+          <h2 id="currentCategoryTitle" class="category-view-title">Catégorie</h2>
+          <p class="category-view-hint">Appuyez sur <strong>+</strong> pour ajouter et revenir à la sélection générale</p>
+        </div>
+      </div>
+
+      <div id="categoryItemsList" class="items-grid"></div>
+
+      <!-- AJOUT RAPIDE D'UNE OPTION DANS CETTE CATÉGORIE -->
+      <div class="quick-add-box">
+        <form id="formQuickAddItem" class="quick-add-form">
+          <input
+            type="text"
+            id="inputQuickItemName"
+            class="input-text"
+            placeholder="Ajouter un nouvel article dans cette catégorie..."
+            maxlength="60"
+            required
+          >
+          <button type="submit" class="btn-primary-sm">+ Ajouter à la carte</button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODALE DE VALIDATION FINALE (RÉCAPITULATIF GRAND FORMAT POUR LE SERVICE AU BAR) -->
+  <div id="modalValidation" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="modalValidationTitle">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div>
+          <span class="modal-kicker">RBC CINEY — COMMANDE VALIDÉE</span>
+          <h2 id="modalValidationTitle" class="modal-title">Récapitulatif à préparer</h2>
+        </div>
+        <div class="modal-total-pill">
+          Total : <strong id="validatedTotalCount">0</strong> article(s)
+        </div>
+      </div>
+
+      <div class="modal-body">
+        <p class="modal-instruction">
+          Touchez une ligne au fur et à mesure que vous servez les articles :
+        </p>
+        <div id="validatedGroupsContainer" class="validated-groups"></div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" id="btnModifyOrder" class="btn-secondary">
+          &larr; Modifier la commande
+        </button>
+        <button type="button" id="btnNewOrder" class="btn-validate">
+          Nouvelle commande
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODALE DE GESTION DE LA CARTE (AJOUT / SUPPRESSION D'ARTICLES ET DE CATÉGORIES) -->
+  <div id="modalManageMenu" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="modalManageTitle">
+    <div class="modal-card modal-large">
+      <div class="modal-header">
+        <div>
+          <span class="modal-kicker">ADMINISTRATION DE LA CARTE</span>
+          <h2 id="modalManageTitle" class="modal-title">Modifier les options et catégories</h2>
+        </div>
+        <button type="button" id="btnCloseManageModal" class="btn-close-modal" aria-label="Fermer">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- AJOUTER UN ARTICLE -->
+        <div class="admin-block">
+          <h3 class="admin-block-title">1. Ajouter une boisson ou un article</h3>
+          <form id="formAdminAddItem" class="admin-form-row">
+            <select id="selectAdminCategory" class="input-select" required aria-label="Choisir la catégorie"></select>
+            <input
+              type="text"
+              id="inputAdminItemName"
+              class="input-text"
+              placeholder="Nom de l'article (ex: Fuze Tea Green, Blanche...)"
+              maxlength="60"
+              required
+            >
+            <button type="submit" class="btn-primary-sm">Ajouter</button>
+          </form>
+        </div>
+
+        <!-- AJOUTER UNE NOUVELLE CATÉGORIE -->
+        <div class="admin-block">
+          <h3 class="admin-block-title">2. Créer une nouvelle catégorie</h3>
+          <form id="formAdminAddCategory" class="admin-form-row">
+            <input
+              type="text"
+              id="inputAdminCategoryName"
+              class="input-text"
+              placeholder="Nom de la nouvelle catégorie (ex: Cocktails, Desserts...)"
+              maxlength="40"
+              required
+            >
+            <button type="submit" class="btn-primary-sm">Créer la catégorie</button>
+          </form>
+        </div>
+
+        <!-- LISTE DES CATÉGORIES ET ARTICLES EXISTANTS -->
+        <div class="admin-block">
+          <div class="admin-list-header">
+            <h3 class="admin-block-title">3. Carte actuelle du RBC Ciney</h3>
+            <button type="button" id="btnResetDefaultMenu" class="btn-danger-outline">
+              Réinitialiser la carte d'origine
+            </button>
+          </div>
+          <div id="adminMenuContainer" class="admin-menu-container"></div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" id="btnDoneManageModal" class="btn-validate">
+          Terminer
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
