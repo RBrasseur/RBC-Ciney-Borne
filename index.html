@@ -24,9 +24,12 @@
         <span class="club-welcome">BIENVENUE AU</span>
         <h1 class="club-name">RBC CINEY</h1>
       </div>
-      <div class="header-actions">
+      <div class="header-actions" style="display: flex; gap: 8px;">
+        <button type="button" id="btnShareApp" class="btn-header-outline" aria-label="Partager l'application">
+          🔗 Partager
+        </button>
         <button type="button" id="btnManageMenu" class="btn-header-outline" aria-label="Gérer la carte">
-          Gérer la carte
+          ⚙️ Carte
         </button>
       </div>
     </div>
@@ -213,6 +216,28 @@
     </div>
   </div>
 
+
+  <!-- MODALE DE PARTAGE (QR CODE) -->
+  <div id="modalShare" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="modalShareTitle">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div>
+          <span class="modal-kicker">PARTAGER L'APPLICATION</span>
+          <h2 id="modalShareTitle" class="modal-title">QR Code</h2>
+        </div>
+        <button type="button" id="btnCloseShare" class="btn-close-modal" aria-label="Fermer">&times;</button>
+      </div>
+      <div class="modal-body" style="text-align: center; display: flex; flex-direction: column; align-items: center;">
+        <p class="modal-instruction" style="margin-bottom: 20px;">
+          Faites scanner ce QR code pour ouvrir l'application sur un autre téléphone.
+        </p>
+        <div id="qrCodeContainer" style="background: white; padding: 16px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin-bottom: 20px;"></div>
+        <p id="shareUrlText" style="font-size: 0.9rem; font-weight: 700; color: var(--rbc-blue-primary); word-break: break-all; padding: 0 10px;"></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script src="app.js"></script>
   <script>
     if ('serviceWorker' in navigator) {

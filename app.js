@@ -555,6 +555,40 @@ function removeCategory(catId) {
 
 // Liaison des événements de l'interface
 function bindEvents() {
+  // Gestion du QR Code (Partage)
+  document.getElementById('btnShareApp').addEventListener('click', () => {
+    const modal = document.getElementById('modalShare');
+    const qrContainer = document.getElementById('qrCodeContainer');
+    const urlText = document.getElementById('shareUrlText');
+    
+    // Nettoyer l'ancien QR code
+    qrContainer.innerHTML = '';
+    
+    // Obtenir l'URL propre (sans paramètres ni index.html)
+    let currentUrl = window.location.href.split('?')[0];
+    if (currentUrl.endsWith('index.html')) {
+        currentUrl = currentUrl.replace('index.html', '');
+    }
+    
+    urlText.textContent = currentUrl;
+    
+    // Générer le nouveau QR code
+    new QRCode(qrContainer, {
+      text: currentUrl,
+      width: 220,
+      height: 220,
+      colorDark : "#002266",
+      colorLight : "#ffffff",
+      correctLevel : QRCode.CorrectLevel.H
+    });
+    
+    modal.classList.remove('hidden');
+  });
+
+  document.getElementById('btnCloseShare').addEventListener('click', () => {
+    document.getElementById('modalShare').classList.add('hidden');
+  });
+
   document.getElementById('btnHomeHeader').addEventListener('click', showGeneralView);
   document.getElementById('btnBackToGeneral').addEventListener('click', showGeneralView);
 
