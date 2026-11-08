@@ -806,3 +806,17 @@ body {
   font-size: 1rem;
   cursor: pointer;
 }
+
+/* Compatibilité Apple iOS (encoche iPhone / Safe Area & tactile) */
+.app-header {
+  padding-top: calc(14px + env(safe-area-inset-top, 0px));
+}
+body {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  -webkit-touch-callout: none;
+  touch-action: manipulation;
+}
+button, input, select {
+  font-family: inherit;
+  touch-action: manipulation;
+}
