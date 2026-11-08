@@ -36,6 +36,14 @@ body {
   display: flex;
   flex-direction: column;
   user-select: none;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  -webkit-touch-callout: none;
+  touch-action: manipulation;
+}
+
+button, input, select {
+  font-family: inherit;
+  touch-action: manipulation;
 }
 
 /* EN-TÊTE BLEU & BLANC */
@@ -43,6 +51,7 @@ body {
   background: linear-gradient(135deg, var(--rbc-blue-dark) 0%, var(--rbc-blue-primary) 100%);
   color: var(--rbc-white);
   padding: 14px 16px;
+  padding-top: calc(14px + env(safe-area-inset-top, 0px));
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
   position: sticky;
   top: 0;
@@ -55,7 +64,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 10px;
 }
 
 .club-identity {
@@ -73,27 +82,34 @@ body {
 }
 
 .club-name {
-  font-size: 1.45rem;
+  font-size: 1.35rem;
   font-weight: 900;
   letter-spacing: 0.04em;
   color: var(--rbc-white);
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .btn-header-outline {
-  background-color: rgba(255, 255, 255, 0.14);
+  background-color: rgba(255, 255, 255, 0.16);
   color: var(--rbc-white);
-  border: 1.5px solid rgba(255, 255, 255, 0.55);
+  border: 1.5px solid rgba(255, 255, 255, 0.65);
   border-radius: 10px;
-  padding: 9px 14px;
-  font-size: 0.9rem;
-  font-weight: 700;
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  font-weight: 800;
   cursor: pointer;
+  white-space: nowrap;
   transition: background-color 0.15s ease;
 }
 
 .btn-header-outline:hover,
 .btn-header-outline:active {
-  background-color: rgba(255, 255, 255, 0.28);
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 /* BANDEAU DE NOTIFICATION (TOAST) */
@@ -207,7 +223,7 @@ body {
 }
 
 .category-card-title {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 800;
   color: var(--rbc-blue-dark);
   text-transform: uppercase;
@@ -297,7 +313,6 @@ body {
 .order-items-list {
   list-style: none;
   margin: 12px 0;
-  divide-y: 1px solid var(--rbc-blue-light);
 }
 
 .order-item-row {
@@ -408,7 +423,7 @@ body {
   border: none;
   border-radius: 12px;
   padding: 15px 20px;
-  font-size: 1.08rem;
+  font-size: 1.05rem;
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.03em;
@@ -427,7 +442,7 @@ body {
   cursor: not-allowed;
 }
 
-/* VUE CATÉGORIE (SÉLECTION D'UNE BOISSON / ARTICLE) */
+/* VUE CATÉGORIE */
 .category-nav-bar {
   display: flex;
   flex-direction: column;
@@ -581,7 +596,7 @@ body {
   cursor: pointer;
 }
 
-/* MODALES (VALIDATION & GESTION DE LA CARTE) */
+/* MODALES (VALIDATION, GESTION DE LA CARTE & QR CODE) */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -807,16 +822,38 @@ body {
   cursor: pointer;
 }
 
-/* Compatibilité Apple iOS (encoche iPhone / Safe Area & tactile) */
-.app-header {
-  padding-top: calc(14px + env(safe-area-inset-top, 0px));
+/* QR CODE & PARTAGE */
+.qr-box-wrapper {
+  background-color: #FFFFFF;
+  border: 3px solid var(--rbc-blue-primary);
+  border-radius: 16px;
+  padding: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 18px rgba(0, 34, 102, 0.12);
+  margin: 10px auto 16px auto;
 }
-body {
-  padding-bottom: env(safe-area-inset-bottom, 0px);
-  -webkit-touch-callout: none;
-  touch-action: manipulation;
+
+.qr-url-box {
+  background-color: var(--rbc-blue-light);
+  border: 1.5px solid var(--rbc-blue-border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--rbc-blue-dark);
+  word-break: break-all;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 14px;
+  user-select: all;
 }
-button, input, select {
-  font-family: inherit;
-  touch-action: manipulation;
+
+.share-buttons-row {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  justify-content: center;
+  flex-wrap: wrap;
 }
