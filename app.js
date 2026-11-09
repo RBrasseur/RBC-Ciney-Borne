@@ -515,12 +515,15 @@
       btn.type = 'button';
       btn.className = `category-card ${selectedCount > 0 ? 'has-selected' : ''}`;
       btn.innerHTML = `
-        <div class="category-card-top">
+        <div class="category-card-left">
           <span class="category-card-title">${escapeHtml(category.name)}</span>
-          ${selectedCount > 0 ? `<span class="category-badge-count">${selectedCount}</span>` : ''}
+          <span class="category-card-meta">
+            ${category.items.length} option${category.items.length > 1 ? 's' : ''} disponible${category.items.length > 1 ? 's' : ''}
+          </span>
         </div>
-        <div class="category-card-meta">
-          ${category.items.length} option${category.items.length > 1 ? 's' : ''} disponible${category.items.length > 1 ? 's' : ''}
+        <div class="category-card-right">
+          ${selectedCount > 0 ? `<span class="category-badge-count">${selectedCount}</span>` : ''}
+          <span class="category-chevron" aria-hidden="true">&rsaquo;</span>
         </div>
       `;
       btn.addEventListener('click', () => openCategoryView(category.id));

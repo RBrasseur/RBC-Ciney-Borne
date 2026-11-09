@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
   <meta name="theme-color" content="#0038A8">
   <!-- Compatibilité Android PWA -->
   <meta name="mobile-web-app-capable" content="yes">
@@ -17,8 +17,9 @@
   <link rel="stylesheet" href="./styles.css">
   <style>
 /* ==========================================================================
-   RBC CINEY — FEUILLE DE STYLE OFFICIELLE (BLEU & BLANC)
-   Conçue pour une utilisation tactile rapide sur smartphone et tablette
+   RBC CINEY — FEUILLE DE STYLE MOBILE GRAND FORMAT (BLEU & BLANC)
+   - 6 sélections empilées les unes en dessous des autres (1 seule colonne)
+   - Mise à l'échelle automatique (rem / vw) pour une lecture parfaite sans zoomer
    ========================================================================== */
 
 :root {
@@ -26,16 +27,32 @@
   --rbc-blue-primary: #0038A8;
   --rbc-blue-bright: #0052CC;
   --rbc-blue-light: #EBF2FF;
-  --rbc-blue-border: #B8D0FF;
+  --rbc-blue-border: #99C0FF;
   --rbc-white: #FFFFFF;
-  --rbc-bg: #F4F7FC;
+  --rbc-bg: #F0F5FF;
   --rbc-text-main: #0F172A;
-  --rbc-text-muted: #475569;
+  --rbc-text-muted: #334155;
   --rbc-danger: #DC2626;
   --rbc-danger-light: #FEE2E2;
   --rbc-success: #059669;
-  --rbc-shadow: 0 4px 12px rgba(0, 34, 102, 0.08);
-  --rbc-radius: 14px;
+  --rbc-shadow: 0 0.25rem 0.75rem rgba(0, 34, 102, 0.10);
+  --rbc-radius: 0.85rem;
+}
+
+/* Base typographique adaptative :
+   En mode portrait (smartphone), 1rem = 4.4vw.
+   Que le navigateur utilise une largeur de 360px, 412px ou 980px,
+   les textes et boutons occupent toujours exactement la même grande taille à l'écran ! */
+html {
+  font-size: 18px;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+@media (orientation: portrait) {
+  html {
+    font-size: 4.4vw;
+  }
 }
 
 * {
@@ -49,7 +66,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   background-color: var(--rbc-bg);
   color: var(--rbc-text-main);
-  line-height: 1.4;
+  line-height: 1.35;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -61,6 +78,7 @@ body {
 
 button, input, select {
   font-family: inherit;
+  font-size: 1rem;
   touch-action: manipulation;
 }
 
@@ -68,21 +86,22 @@ button, input, select {
 .app-header {
   background: linear-gradient(135deg, var(--rbc-blue-dark) 0%, var(--rbc-blue-primary) 100%);
   color: var(--rbc-white);
-  padding: 14px 16px;
-  padding-top: calc(14px + env(safe-area-inset-top, 0px));
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+  padding: 0.8rem 1rem;
+  padding-top: calc(0.8rem + env(safe-area-inset-top, 0px));
+  box-shadow: 0 0.2rem 0.6rem rgba(0, 0, 0, 0.18);
   position: sticky;
   top: 0;
   z-index: 40;
 }
 
 .header-inner {
-  max-width: 960px;
+  width: 100%;
+  max-width: 42rem;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  gap: 0.6rem;
 }
 
 .club-identity {
@@ -93,81 +112,80 @@ button, input, select {
 
 .club-welcome {
   font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
+  font-weight: 800;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: #CFE0FF;
 }
 
 .club-name {
-  font-size: 1.35rem;
+  font-size: 1.45rem;
   font-weight: 900;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
   color: var(--rbc-white);
+  line-height: 1.1;
 }
 
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 0.5rem;
 }
 
 .btn-header-outline {
-  background-color: rgba(255, 255, 255, 0.16);
+  background-color: rgba(255, 255, 255, 0.18);
   color: var(--rbc-white);
-  border: 1.5px solid rgba(255, 255, 255, 0.65);
-  border-radius: 10px;
-  padding: 8px 12px;
-  font-size: 0.85rem;
+  border: 0.12rem solid rgba(255, 255, 255, 0.75);
+  border-radius: 0.65rem;
+  padding: 0.55rem 0.8rem;
+  font-size: 0.9rem;
   font-weight: 800;
   cursor: pointer;
   white-space: nowrap;
-  transition: background-color 0.15s ease;
 }
 
-.btn-header-outline:hover,
 .btn-header-outline:active {
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.35);
 }
 
 /* BANDEAU DE NOTIFICATION (TOAST) */
 .toast-banner {
   background-color: var(--rbc-blue-dark);
   color: var(--rbc-white);
-  padding: 10px 16px;
+  padding: 0.75rem 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  border-bottom: 2px solid var(--rbc-white);
-  max-width: 960px;
+  gap: 0.75rem;
+  border-bottom: 0.15rem solid var(--rbc-white);
   width: 100%;
+  max-width: 42rem;
   margin: 0 auto;
 }
 
 .toast-text {
-  font-size: 0.95rem;
-  font-weight: 600;
+  font-size: 1.05rem;
+  font-weight: 800;
 }
 
 .btn-toast-undo {
   background-color: var(--rbc-white);
   color: var(--rbc-blue-dark);
   border: none;
-  border-radius: 8px;
-  padding: 6px 12px;
-  font-weight: 800;
-  font-size: 0.85rem;
+  border-radius: 0.55rem;
+  padding: 0.5rem 0.85rem;
+  font-weight: 900;
+  font-size: 0.92rem;
   cursor: pointer;
   white-space: nowrap;
 }
 
 /* CONTENEUR PRINCIPAL */
 .app-main {
-  max-width: 960px;
   width: 100%;
+  max-width: 42rem;
   margin: 0 auto;
-  padding: 16px;
+  padding: 0.9rem 1rem 1.8rem 1rem;
   flex: 1;
 }
 
@@ -176,105 +194,115 @@ button, input, select {
 }
 
 .section-header {
-  margin-bottom: 14px;
+  margin-bottom: 0.8rem;
 }
 
 .section-title {
-  font-size: 1.25rem;
-  font-weight: 800;
+  font-size: 1.35rem;
+  font-weight: 900;
   color: var(--rbc-blue-dark);
 }
 
 .section-subtitle {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
+  font-weight: 600;
   color: var(--rbc-text-muted);
+  margin-top: 0.15rem;
 }
 
-/* GRILLE DES CATÉGORIES (SÉLECTION GÉNÉRALE) */
+/* ==========================================================================
+   LES 6 SÉLECTIONS EMPILÉES LES UNES EN DESSOUS DES AUTRES (1 COLONNE)
+   ========================================================================== */
 .categories-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  margin-bottom: 22px;
-}
-
-@media (min-width: 640px) {
-  .categories-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin-bottom: 1.25rem;
 }
 
 .category-card {
+  width: 100%;
   background-color: var(--rbc-white);
-  border: 2px solid var(--rbc-blue-border);
+  border: 0.15rem solid var(--rbc-blue-border);
+  border-left: 0.45rem solid var(--rbc-blue-primary);
   border-radius: var(--rbc-radius);
-  padding: 18px 14px;
+  padding: 0.9rem 1.1rem;
   text-align: left;
   cursor: pointer;
   box-shadow: var(--rbc-shadow);
   display: flex;
-  flex-direction: column;
+  align-items: center;
   justify-content: space-between;
-  min-height: 104px;
-  position: relative;
-  transition: transform 0.1s ease, border-color 0.15s ease, background-color 0.15s ease;
+  gap: 0.8rem;
+  transition: transform 0.08s ease, background-color 0.12s ease, border-color 0.12s ease;
 }
 
-.category-card:hover,
 .category-card:active {
-  border-color: var(--rbc-blue-primary);
+  border-color: var(--rbc-blue-dark);
   background-color: var(--rbc-blue-light);
-  transform: translateY(-1px);
+  transform: scale(0.99);
 }
 
 .category-card.has-selected {
   border-color: var(--rbc-blue-primary);
-  background: linear-gradient(180deg, var(--rbc-white) 0%, var(--rbc-blue-light) 100%);
+  background: linear-gradient(90deg, var(--rbc-white) 0%, var(--rbc-blue-light) 100%);
 }
 
-.category-card-top {
+.category-card-left {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 8px;
+  flex-direction: column;
+  gap: 0.2rem;
 }
 
 .category-card-title {
-  font-size: 1.05rem;
-  font-weight: 800;
+  font-size: 1.25rem;
+  font-weight: 900;
   color: var(--rbc-blue-dark);
   text-transform: uppercase;
   letter-spacing: 0.02em;
 }
 
+.category-card-meta {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--rbc-text-muted);
+}
+
+.category-card-right {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
 .category-badge-count {
   background-color: var(--rbc-blue-primary);
   color: var(--rbc-white);
-  font-size: 0.85rem;
-  font-weight: 800;
-  min-width: 28px;
-  height: 28px;
+  font-size: 1.05rem;
+  font-weight: 900;
+  min-width: 2.2rem;
+  height: 2.2rem;
   border-radius: 999px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0 8px;
+  padding: 0 0.6rem;
 }
 
-.category-card-meta {
-  margin-top: 10px;
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: var(--rbc-text-muted);
+.category-chevron {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--rbc-blue-primary);
+  line-height: 1;
 }
 
-/* CARTE RÉSUMÉ DE LA COMMANDE */
+/* ==========================================================================
+   CARTE RÉSUMÉ DE LA COMMANDE (GRAND FORMAT LISIBLE)
+   ========================================================================== */
 .summary-card {
   background-color: var(--rbc-white);
-  border: 2px solid var(--rbc-blue-primary);
+  border: 0.16rem solid var(--rbc-blue-primary);
   border-radius: var(--rbc-radius);
-  padding: 18px;
+  padding: 1rem;
   box-shadow: var(--rbc-shadow);
 }
 
@@ -282,64 +310,69 @@ button, input, select {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  padding-bottom: 14px;
-  border-bottom: 2px solid var(--rbc-blue-light);
+  gap: 0.75rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 0.14rem solid var(--rbc-blue-light);
 }
 
 .summary-title {
-  font-size: 1.2rem;
-  font-weight: 800;
+  font-size: 1.3rem;
+  font-weight: 900;
   color: var(--rbc-blue-dark);
 }
 
 .summary-subtitle {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
+  font-weight: 600;
   color: var(--rbc-text-muted);
+  margin-top: 0.15rem;
 }
 
 .summary-total-badge {
   background-color: var(--rbc-blue-primary);
   color: var(--rbc-white);
-  border-radius: 12px;
-  padding: 8px 14px;
+  border-radius: 0.75rem;
+  padding: 0.45rem 0.9rem;
   text-align: center;
-  min-width: 84px;
+  min-width: 4.8rem;
 }
 
 .total-label {
   display: block;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
+  font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  opacity: 0.9;
+  opacity: 0.95;
 }
 
 .total-number {
-  font-size: 1.5rem;
+  font-size: 1.65rem;
   font-weight: 900;
+  line-height: 1.1;
 }
 
 .order-empty {
-  padding: 24px 12px;
+  padding: 1.3rem 0.6rem;
   text-align: center;
   color: var(--rbc-text-muted);
-  font-size: 0.95rem;
+  font-size: 1.05rem;
+  font-weight: 600;
   font-style: italic;
 }
 
 .order-items-list {
   list-style: none;
-  margin: 12px 0;
+  margin: 0.6rem 0;
 }
 
 .order-item-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
-  padding: 10px 4px;
-  border-bottom: 1px solid #E2E8F0;
+  gap: 0.6rem;
+  padding: 0.75rem 0.2rem;
+  border-bottom: 0.08rem solid #CBD5E1;
 }
 
 .order-item-row:last-child {
@@ -351,30 +384,31 @@ button, input, select {
 }
 
 .order-item-name {
-  font-size: 1rem;
-  font-weight: 800;
+  font-size: 1.15rem;
+  font-weight: 900;
   color: var(--rbc-text-main);
   text-transform: uppercase;
 }
 
 .order-item-cat {
-  font-size: 0.78rem;
+  font-size: 0.88rem;
   color: var(--rbc-blue-primary);
-  font-weight: 700;
+  font-weight: 800;
+  margin-top: 0.1rem;
 }
 
 .qty-controls {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 0.5rem;
 }
 
 .btn-qty-minus,
 .btn-qty-plus {
-  width: 44px;
-  height: 44px;
-  border-radius: 10px;
-  font-size: 1.4rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.65rem;
+  font-size: 1.6rem;
   font-weight: 900;
   border: none;
   cursor: pointer;
@@ -386,7 +420,7 @@ button, input, select {
 .btn-qty-minus {
   background-color: var(--rbc-danger-light);
   color: var(--rbc-danger);
-  border: 1.5px solid #FCA5A5;
+  border: 0.12rem solid #FCA5A5;
 }
 
 .btn-qty-minus:active {
@@ -403,28 +437,30 @@ button, input, select {
 }
 
 .qty-value {
-  min-width: 32px;
+  min-width: 2rem;
   text-align: center;
-  font-size: 1.15rem;
+  font-size: 1.35rem;
   font-weight: 900;
   color: var(--rbc-blue-dark);
 }
 
 .summary-footer {
   display: flex;
-  gap: 12px;
-  margin-top: 16px;
-  padding-top: 14px;
-  border-top: 2px solid var(--rbc-blue-light);
+  flex-direction: column;
+  gap: 0.65rem;
+  margin-top: 0.9rem;
+  padding-top: 0.9rem;
+  border-top: 0.14rem solid var(--rbc-blue-light);
 }
 
 .btn-secondary {
+  width: 100%;
   background-color: var(--rbc-white);
   color: var(--rbc-blue-dark);
-  border: 2px solid var(--rbc-blue-border);
-  border-radius: 12px;
-  padding: 14px 16px;
-  font-size: 0.95rem;
+  border: 0.14rem solid var(--rbc-blue-border);
+  border-radius: 0.75rem;
+  padding: 0.85rem 1rem;
+  font-size: 1.05rem;
   font-weight: 800;
   cursor: pointer;
 }
@@ -435,21 +471,20 @@ button, input, select {
 }
 
 .btn-validate {
-  flex: 1;
+  width: 100%;
   background-color: var(--rbc-blue-primary);
   color: var(--rbc-white);
   border: none;
-  border-radius: 12px;
-  padding: 15px 20px;
-  font-size: 1.05rem;
+  border-radius: 0.75rem;
+  padding: 1rem 1.2rem;
+  font-size: 1.18rem;
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.03em;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 56, 168, 0.25);
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 56, 168, 0.28);
 }
 
-.btn-validate:hover:not(:disabled),
 .btn-validate:active:not(:disabled) {
   background-color: var(--rbc-blue-dark);
 }
@@ -460,60 +495,63 @@ button, input, select {
   cursor: not-allowed;
 }
 
-/* VUE CATÉGORIE */
+/* ==========================================================================
+   VUE CATÉGORIE (BOISSONS / ARTICLES EMPILÉS EN 1 COLONNE GRAND FORMAT)
+   ========================================================================== */
 .category-nav-bar {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-bottom: 16px;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
 }
 
 .btn-back {
-  align-self: flex-start;
+  width: 100%;
   background-color: var(--rbc-white);
   color: var(--rbc-blue-primary);
-  border: 2px solid var(--rbc-blue-primary);
-  border-radius: 10px;
-  padding: 10px 16px;
-  font-size: 0.95rem;
-  font-weight: 800;
+  border: 0.15rem solid var(--rbc-blue-primary);
+  border-radius: 0.75rem;
+  padding: 0.8rem 1rem;
+  font-size: 1.08rem;
+  font-weight: 900;
+  text-align: center;
   cursor: pointer;
 }
 
+.btn-back:active {
+  background-color: var(--rbc-blue-light);
+}
+
 .category-view-title {
-  font-size: 1.35rem;
+  font-size: 1.5rem;
   font-weight: 900;
   color: var(--rbc-blue-dark);
   text-transform: uppercase;
 }
 
 .category-view-hint {
-  font-size: 0.88rem;
+  font-size: 0.95rem;
+  font-weight: 600;
   color: var(--rbc-text-muted);
 }
 
 .items-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-@media (min-width: 600px) {
-  .items-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin-bottom: 1.3rem;
 }
 
 .item-card {
+  width: 100%;
   background-color: var(--rbc-white);
-  border: 2px solid var(--rbc-blue-border);
-  border-radius: 12px;
-  padding: 12px 14px;
+  border: 0.15rem solid var(--rbc-blue-border);
+  border-radius: 0.8rem;
+  padding: 0.85rem 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 0.75rem;
   box-shadow: var(--rbc-shadow);
 }
 
@@ -527,90 +565,91 @@ button, input, select {
 }
 
 .item-name {
-  font-size: 1.05rem;
-  font-weight: 800;
+  font-size: 1.2rem;
+  font-weight: 900;
   color: var(--rbc-text-main);
   text-transform: uppercase;
 }
 
 .item-current-qty {
   display: inline-block;
-  margin-top: 3px;
-  font-size: 0.82rem;
-  font-weight: 800;
+  margin-top: 0.2rem;
+  font-size: 0.95rem;
+  font-weight: 900;
   color: var(--rbc-blue-primary);
 }
 
 .item-actions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 0.55rem;
 }
 
 .btn-item-minus {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 0.75rem;
   background-color: var(--rbc-danger-light);
   color: var(--rbc-danger);
-  border: 2px solid #FCA5A5;
-  font-size: 1.5rem;
+  border: 0.14rem solid #FCA5A5;
+  font-size: 1.7rem;
   font-weight: 900;
   cursor: pointer;
 }
 
 .btn-item-plus {
-  width: 56px;
-  height: 48px;
-  border-radius: 12px;
+  width: 3.8rem;
+  height: 3.2rem;
+  border-radius: 0.75rem;
   background-color: var(--rbc-blue-primary);
   color: var(--rbc-white);
   border: none;
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: 900;
   cursor: pointer;
-  box-shadow: 0 3px 8px rgba(0, 56, 168, 0.25);
+  box-shadow: 0 0.2rem 0.5rem rgba(0, 56, 168, 0.25);
 }
 
 .btn-item-plus:active {
   background-color: var(--rbc-blue-dark);
-  transform: scale(0.97);
+  transform: scale(0.96);
 }
 
 /* AJOUT RAPIDE D'ARTICLE EN BAS DE CATÉGORIE */
 .quick-add-box {
   background-color: var(--rbc-white);
-  border: 1.5px dashed var(--rbc-blue-border);
-  border-radius: 12px;
-  padding: 14px;
+  border: 0.14rem dashed var(--rbc-blue-border);
+  border-radius: 0.8rem;
+  padding: 0.95rem;
 }
 
 .quick-add-form {
   display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 0.6rem;
 }
 
 .input-text,
 .input-select {
-  flex: 1;
-  min-width: 180px;
-  padding: 11px 12px;
-  border: 1.5px solid var(--rbc-blue-border);
-  border-radius: 10px;
-  font-size: 0.95rem;
+  width: 100%;
+  padding: 0.8rem 0.9rem;
+  border: 0.14rem solid var(--rbc-blue-border);
+  border-radius: 0.65rem;
+  font-size: 1.05rem;
+  font-weight: 600;
   background-color: var(--rbc-white);
   color: var(--rbc-text-main);
 }
 
 .btn-primary-sm {
+  width: 100%;
   background-color: var(--rbc-blue-primary);
   color: var(--rbc-white);
   border: none;
-  border-radius: 10px;
-  padding: 11px 16px;
-  font-size: 0.9rem;
-  font-weight: 800;
+  border-radius: 0.65rem;
+  padding: 0.85rem 1rem;
+  font-size: 1.05rem;
+  font-weight: 900;
   cursor: pointer;
 }
 
@@ -618,101 +657,100 @@ button, input, select {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 20, 60, 0.65);
+  background-color: rgba(0, 20, 60, 0.72);
   z-index: 100;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 14px;
+  padding: 0.8rem;
 }
 
 .modal-card {
   background-color: var(--rbc-white);
-  border-radius: 16px;
+  border-radius: 1rem;
   width: 100%;
-  max-width: 580px;
-  max-height: 90vh;
+  max-width: 38rem;
+  max-height: 92vh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
-}
-
-.modal-large {
-  max-width: 720px;
+  box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.35);
 }
 
 .modal-header {
   background: linear-gradient(135deg, var(--rbc-blue-dark) 0%, var(--rbc-blue-primary) 100%);
   color: var(--rbc-white);
-  padding: 16px 18px;
+  padding: 1rem 1.1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 0.75rem;
 }
 
 .modal-kicker {
   display: block;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 800;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   color: #CFE0FF;
   text-transform: uppercase;
 }
 
 .modal-title {
-  font-size: 1.25rem;
+  font-size: 1.3rem;
   font-weight: 900;
 }
 
 .modal-total-pill {
   background-color: var(--rbc-white);
   color: var(--rbc-blue-dark);
-  padding: 8px 14px;
+  padding: 0.45rem 0.85rem;
   border-radius: 999px;
-  font-size: 0.95rem;
-  font-weight: 800;
+  font-size: 1rem;
+  font-weight: 900;
+  white-space: nowrap;
 }
 
 .btn-close-modal {
   background: transparent;
   color: var(--rbc-white);
   border: none;
-  font-size: 2rem;
+  font-size: 2.2rem;
   line-height: 1;
+  padding: 0 0.3rem;
   cursor: pointer;
 }
 
 .modal-body {
-  padding: 18px;
+  padding: 1.1rem;
   overflow-y: auto;
   flex: 1;
 }
 
 .modal-instruction {
-  font-size: 0.9rem;
+  font-size: 1rem;
+  font-weight: 600;
   color: var(--rbc-text-muted);
-  margin-bottom: 12px;
+  margin-bottom: 0.85rem;
 }
 
 .validated-groups {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 0.9rem;
 }
 
 .validated-group-card {
-  border: 1.5px solid var(--rbc-blue-border);
-  border-radius: 12px;
+  border: 0.14rem solid var(--rbc-blue-border);
+  border-radius: 0.75rem;
   overflow: hidden;
 }
 
 .validated-group-title {
   background-color: var(--rbc-blue-light);
   color: var(--rbc-blue-dark);
-  padding: 8px 12px;
-  font-size: 0.9rem;
+  padding: 0.6rem 0.9rem;
+  font-size: 1rem;
   font-weight: 900;
   text-transform: uppercase;
 }
@@ -721,114 +759,116 @@ button, input, select {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 14px;
-  border-top: 1px solid #E2E8F0;
+  padding: 0.85rem 0.9rem;
+  border-top: 0.08rem solid #E2E8F0;
   cursor: pointer;
 }
 
 .validated-item-row.served {
   background-color: #F1F5F9;
   text-decoration: line-through;
-  opacity: 0.6;
+  opacity: 0.55;
 }
 
 .validated-item-name {
-  font-size: 1.05rem;
-  font-weight: 800;
+  font-size: 1.18rem;
+  font-weight: 900;
   text-transform: uppercase;
 }
 
 .validated-item-qty {
   background-color: var(--rbc-blue-primary);
   color: var(--rbc-white);
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: 900;
-  padding: 4px 12px;
-  border-radius: 8px;
+  padding: 0.3rem 0.8rem;
+  border-radius: 0.55rem;
 }
 
 .modal-footer {
-  padding: 14px 18px;
+  padding: 0.9rem 1.1rem;
   background-color: #F8FAFC;
-  border-top: 1.5px solid #E2E8F0;
+  border-top: 0.1rem solid #E2E8F0;
   display: flex;
-  gap: 12px;
+  flex-direction: column;
+  gap: 0.6rem;
 }
 
 /* ADMINISTRATION DE LA CARTE */
 .admin-block {
-  margin-bottom: 20px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid #E2E8F0;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 0.08rem solid #E2E8F0;
 }
 
 .admin-block-title {
-  font-size: 1rem;
-  font-weight: 800;
+  font-size: 1.1rem;
+  font-weight: 900;
   color: var(--rbc-blue-dark);
-  margin-bottom: 10px;
+  margin-bottom: 0.65rem;
 }
 
 .admin-form-row {
   display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 0.6rem;
 }
 
 .admin-list-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 10px;
+  gap: 0.6rem;
+  margin-bottom: 0.75rem;
   flex-wrap: wrap;
 }
 
 .btn-danger-outline {
   background-color: var(--rbc-white);
   color: var(--rbc-danger);
-  border: 1.5px solid var(--rbc-danger);
-  border-radius: 8px;
-  padding: 6px 12px;
-  font-size: 0.82rem;
-  font-weight: 700;
+  border: 0.12rem solid var(--rbc-danger);
+  border-radius: 0.55rem;
+  padding: 0.45rem 0.8rem;
+  font-size: 0.9rem;
+  font-weight: 800;
   cursor: pointer;
 }
 
 .admin-category-box {
-  border: 1.5px solid var(--rbc-blue-border);
-  border-radius: 10px;
-  margin-bottom: 12px;
+  border: 0.12rem solid var(--rbc-blue-border);
+  border-radius: 0.7rem;
+  margin-bottom: 0.8rem;
   overflow: hidden;
 }
 
 .admin-category-header {
   background-color: var(--rbc-blue-light);
-  padding: 10px 12px;
+  padding: 0.7rem 0.9rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-weight: 800;
+  font-size: 1.05rem;
+  font-weight: 900;
   color: var(--rbc-blue-dark);
 }
 
 .admin-items-tags {
-  padding: 10px 12px;
+  padding: 0.7rem 0.9rem;
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 0.5rem;
 }
 
 .admin-item-tag {
   background-color: #F8FAFC;
-  border: 1px solid #CBD5E1;
-  border-radius: 8px;
-  padding: 6px 10px;
-  font-size: 0.85rem;
-  font-weight: 700;
+  border: 0.08rem solid #CBD5E1;
+  border-radius: 0.55rem;
+  padding: 0.45rem 0.7rem;
+  font-size: 0.95rem;
+  font-weight: 800;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 0.5rem;
 }
 
 .btn-delete-tag {
@@ -836,44 +876,51 @@ button, input, select {
   border: none;
   color: var(--rbc-danger);
   font-weight: 900;
-  font-size: 1rem;
+  font-size: 1.2rem;
   cursor: pointer;
 }
 
 /* QR CODE & PARTAGE */
 .qr-box-wrapper {
   background-color: #FFFFFF;
-  border: 3px solid var(--rbc-blue-primary);
-  border-radius: 16px;
-  padding: 16px;
+  border: 0.2rem solid var(--rbc-blue-primary);
+  border-radius: 1rem;
+  padding: 0.9rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 6px 18px rgba(0, 34, 102, 0.12);
-  margin: 10px auto 16px auto;
+  box-shadow: 0 0.4rem 1.2rem rgba(0, 34, 102, 0.12);
+  margin: 0.5rem auto 1rem auto;
+}
+
+.qr-box-wrapper svg {
+  width: 13.5rem !important;
+  height: 13.5rem !important;
+  max-width: 72vw;
+  max-height: 72vw;
+  display: block;
 }
 
 .qr-url-box {
   background-color: var(--rbc-blue-light);
-  border: 1.5px solid var(--rbc-blue-border);
-  border-radius: 10px;
-  padding: 10px 12px;
-  font-size: 0.85rem;
-  font-weight: 700;
+  border: 0.12rem solid var(--rbc-blue-border);
+  border-radius: 0.65rem;
+  padding: 0.7rem 0.85rem;
+  font-size: 0.95rem;
+  font-weight: 800;
   color: var(--rbc-blue-dark);
   word-break: break-all;
   width: 100%;
   text-align: center;
-  margin-bottom: 14px;
+  margin-bottom: 0.9rem;
   user-select: all;
 }
 
 .share-buttons-row {
   display: flex;
-  gap: 10px;
+  flex-direction: column;
+  gap: 0.6rem;
   width: 100%;
-  justify-content: center;
-  flex-wrap: wrap;
 }
 
   </style>
@@ -915,7 +962,7 @@ button, input, select {
         <p class="section-subtitle">Touchez une catégorie pour choisir une boisson ou un snack</p>
       </div>
 
-      <!-- GRILLE DES CATÉGORIES -->
+      <!-- LES 6 CATÉGORIES EMPILÉES LES UNES EN DESSOUS DES AUTRES -->
       <div id="categoriesGrid" class="categories-grid"></div>
 
       <!-- RÉSUMÉ DE LA COMMANDE EN COURS SUR L'ÉCRAN GÉNÉRAL -->
@@ -940,11 +987,11 @@ button, input, select {
 
         <!-- ACTIONS DE VALIDATION ET REMISE À ZÉRO -->
         <div class="summary-footer">
-          <button type="button" id="btnClearOrder" class="btn-secondary" disabled>
-            Tout effacer
-          </button>
           <button type="button" id="btnValidateOrder" class="btn-validate" disabled>
             Valider la commande (<span id="btnValidateCount">0</span>)
+          </button>
+          <button type="button" id="btnClearOrder" class="btn-secondary" disabled>
+            Tout effacer
           </button>
         </div>
       </div>
@@ -991,7 +1038,7 @@ button, input, select {
           <h2 id="modalValidationTitle" class="modal-title">Récapitulatif à préparer</h2>
         </div>
         <div class="modal-total-pill">
-          Total : <strong id="validatedTotalCount">0</strong> article(s)
+          Total : <strong id="validatedTotalCount">0</strong>
         </div>
       </div>
 
@@ -1003,11 +1050,11 @@ button, input, select {
       </div>
 
       <div class="modal-footer">
-        <button type="button" id="btnModifyOrder" class="btn-secondary">
-          &larr; Modifier la commande
-        </button>
         <button type="button" id="btnNewOrder" class="btn-validate">
           Nouvelle commande
+        </button>
+        <button type="button" id="btnModifyOrder" class="btn-secondary">
+          &larr; Modifier la commande
         </button>
       </div>
     </div>
@@ -1019,7 +1066,7 @@ button, input, select {
       <div class="modal-header">
         <div>
           <span class="modal-kicker">ADMINISTRATION DE LA CARTE</span>
-          <h2 id="modalManageTitle" class="modal-title">Modifier les options et catégories</h2>
+          <h2 id="modalManageTitle" class="modal-title">Modifier la carte</h2>
         </div>
         <button type="button" id="btnCloseManageModal" class="btn-close-modal" aria-label="Fermer">&times;</button>
       </div>
@@ -1095,8 +1142,8 @@ button, input, select {
         <div id="qrCodeContainer" class="qr-box-wrapper"></div>
         <div id="shareUrlText" class="qr-url-box"></div>
         <div class="share-buttons-row">
-          <button type="button" id="btnCopyShareUrl" class="btn-secondary">Copier le lien</button>
           <button type="button" id="btnNativeShare" class="btn-validate">Envoyer le lien</button>
+          <button type="button" id="btnCopyShareUrl" class="btn-secondary">Copier le lien</button>
         </div>
       </div>
     </div>
@@ -1620,12 +1667,15 @@ button, input, select {
       btn.type = 'button';
       btn.className = `category-card ${selectedCount > 0 ? 'has-selected' : ''}`;
       btn.innerHTML = `
-        <div class="category-card-top">
+        <div class="category-card-left">
           <span class="category-card-title">${escapeHtml(category.name)}</span>
-          ${selectedCount > 0 ? `<span class="category-badge-count">${selectedCount}</span>` : ''}
+          <span class="category-card-meta">
+            ${category.items.length} option${category.items.length > 1 ? 's' : ''} disponible${category.items.length > 1 ? 's' : ''}
+          </span>
         </div>
-        <div class="category-card-meta">
-          ${category.items.length} option${category.items.length > 1 ? 's' : ''} disponible${category.items.length > 1 ? 's' : ''}
+        <div class="category-card-right">
+          ${selectedCount > 0 ? `<span class="category-badge-count">${selectedCount}</span>` : ''}
+          <span class="category-chevron" aria-hidden="true">&rsaquo;</span>
         </div>
       `;
       btn.addEventListener('click', () => openCategoryView(category.id));
